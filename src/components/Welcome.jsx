@@ -90,7 +90,7 @@ const Welcome = () => {
               </div>
               <div>
                 <p className="text-white font-semibold text-3xl mt-1">
-                  {`${currentBalance} ETH`}
+                  {currentBalance}
                 </p>
                 <p className="text-white font-light text-sm">
                   {shortenAddress(currentAccount)}

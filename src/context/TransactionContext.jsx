@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
-import { contractABI, contractAddress } from "../utils/constants";
+import {
+  contractABI,
+  contractAddress,
+  erc20_ABI,
+  usdt_token,
+} from "../utils/constants";
 import { shortenNumber } from "../utils/shortenNumber";
 export const TransactionContext = React.createContext();
 
@@ -42,9 +47,12 @@ export const TransactionProvider = ({ children }) => {
 
   const getAccountBalance = async (account) => {
     const provider = new ethers.providers.Web3Provider(ethereum);
-    const balance = await provider.getBalance(account);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(usdt_token, erc20_ABI, signer);
+    const tokenBalance = await contract.balanceOf(account);
+    console.log({ adasdas: Number(ethers.utils.formatEther(tokenBalance)) });
     setCurrenBalance(
-      shortenNumber(Number(ethers.utils.formatEther(balance)), 3)
+      shortenNumber(Number(ethers.utils.formatEther(tokenBalance)), 3)
     );
   };
 
